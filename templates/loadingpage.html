@@ -1,0 +1,28 @@
+<html>
+<head>
+	<title>Intellipark Loading	</title>
+	<meta http-equiv="refresh" content="3;{{ url_for('home') }}">
+	<link rel="stylesheet" type= "text/css" href="{{ url_for('static', filename='css/style2.css') }}">
+</head>
+	<body style="position: fixed; overflow: hidden; width: 100%">
+		<div style="margin-top: 100px; margin-left: 650px"> <img src="{{ url_for('static', filename='images/intellilogo.jpeg') }}" alt="Intellipark"></div>
+		<div class="hero" style="margin-top: -250px"></div>
+			<div class="highway"></div>			
+			<div class="city"></div>
+
+			<div class="car">
+				<img src="{{ url_for('static', filename='images/car.png') }}">
+			</div> 
+
+			<div class="wheel">
+				<img src="{{ url_for('static', filename='images/wheel.png') }}" class="back-wheel">
+				<img src="{{ url_for('static', filename='images/wheel.png') }}" class="front-wheel">
+			</div>
+			<!--<div style="margin:0 auto; text-align:left; width:200px;"><p style="font-size: 30px;">The Smart Parking you need.</p></div> -->
+			
+
+
+
+
+	</body>
+</html>
