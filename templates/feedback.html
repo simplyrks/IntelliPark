@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Feedback</title>
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/fbcs.css') }}">
+</head>
+<body>
+	<div class="fb">
+		<h1>IntelliPark</h1>
+		<h2>Lets own change, together</h2>
+	</div>
+	<div class="form">
+		<form id="Feedback">
+			<input name="name" type="text" class="form-control" placeholder="Your Name" required><br>
+			<input name="email" type="text" class="form-control" placeholder="Your Email_id" required><br>
+			<textarea name="message" class="form-control" placeholder="Message"rows="4" required></textarea><br>
+			<input type="submit" class="form-control submit" value="Send Message">
+		</form>
+</body>	
+</html>
