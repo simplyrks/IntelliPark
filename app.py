@@ -10,7 +10,7 @@ cur=conn.cursor()
 
 
 @app.route('/')	
-def index():
+def loadingpage():
 	return render_template('loadingpage.html')
 
 
