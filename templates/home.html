@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>IntelliPark</title>
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/csss.css') }}">
+	<link href="https://fonts.googleapis.com/css?family=Poppins:400,500&display=swap" rel="stylesheet">
+</head>
+<body>
+	<header>
+		<div class="main">
+			<div class="logo"><a href="https://www.teksystems.com/en"><img src="{{ url_for('static', filename='img/logo.jpg') }}"></a> </div>
+			<ul>
+				<li><a href="{{ url_for('about') }}"><b>About Us</b></a></li>
+				<li><a href="{{ url_for('feedback') }}"><b>Feedback</b></a></li>
+			</ul>
+		</div>
+		<div class="title">
+			<h1>IntelliPark</h1>
+
+		</div>
+		<div class="button">
+			<a href="{{ url_for('index') }}" class="sub-button">Park My Vehicle</a>
+		</div>
+
+	</header>
+</body>
