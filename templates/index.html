@@ -1,0 +1,186 @@
+<html>
+	
+<head>
+	<link href="https://fonts.googleapis.com/css?family=Poppins:400,500&display=swap" rel="stylesheet">
+	<style>
+		* {
+			padding: 0;
+			margin: 0;
+			box-sizing: border-box;
+			font-family: 'Poppins', sans-serif;
+		}
+
+		body {
+			background: #fef4e6;
+		}
+
+		h1 {
+			padding: 20px;
+		}
+
+		.app {
+			display: flex;
+			flex-wrap: wrap;
+			height: 100vh;
+		}
+
+		.map {
+			padding: 20px;
+		}
+
+		.menu {
+			text-align: center;
+			width: 10%;
+			background: #3c2f2f;
+		}
+
+		.floor {
+			padding: 10px;
+			color: #fef4e6;
+			border: 1px solid #2b0b0b;
+		}
+
+		.floor:hover {
+			cursor: pointer;
+		}
+
+		.parking {
+			width: 90%;
+			padding: 0 20px ;
+		}
+
+		.row {
+			display: flex;
+			flex-wrap: wrap;
+		}
+
+		.cars {
+			margin: 10px 40px;
+			height: 40px;
+			text-align: center;
+			color: #fef4e6;
+			position: relative;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+
+		.no {
+			position: absolute;
+			top: -10;
+			left: -10;
+			height: 30px;
+			width: 30px;
+			padding: 10;
+			background: #3c2f2f;
+			border: 1px solid transparent;
+			border-radius: 50%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+
+		.row > div {
+			flex: 1 1 0;
+		}
+
+		.filled {
+			background: #48120c;
+		}
+
+		.empty {
+			background: #be9b7b;
+		}
+
+		.Form {
+			margin-top: 40px; 
+			text-align: center;
+		}
+
+		.Form > * {
+			margin: 5px;
+		}
+
+		.Form > input  {
+			padding: 3px 5px;
+			width: 150px;
+			height: 30px;
+			border: none;
+			background: #fef4e6;
+			color: #3c2f2f;
+			border-bottom: 1px solid #3c2f2f;
+		}
+
+		button {
+			font-size: 15px;
+			height: 30px;
+			width: 80px;
+			background: #3c2f2f;
+			color: #fef4e6;
+			border: none;
+		}
+
+		button:hover {
+			cursor: pointer;
+		}
+
+		button:focus {
+			outline: none;
+		}
+
+		input:focus {
+			outline: none;	
+		}
+
+		.err {
+			margin: 10;
+			font-size: 20px;
+		}
+
+	</style>
+</head>
+
+<body>
+    <h1>The Parking App</h1>
+    <div class="app">
+    	<div class="menu">
+    		<div id="f1" class="floor">Floor 1</div>
+    		<div id="f2" class="floor">Floor 2</div>
+    		<div id="f3" class="floor">Floor 3</div>
+    	</div>
+    	<div class="parking">
+    		<div id="map1">
+    		</div>
+    		<div id="map2">
+    		</div>
+    		<div id="map3">
+    		</div>
+
+    		<div class="row">
+
+    		<div class="Form">
+    			<h2>Parking</h2>
+    			<input type="text" id="input" placeholder="visitor or emp id" >
+    			<br>
+    			<input type="number" min="0" id="pno" placeholder="parking no" >
+    			<br>
+    			<button id="park">Park</button>
+    			<p class="err" id="error1" ></p>
+			</div>
+
+			<div class="Form">
+				<h2>Removing</h2>
+    			<input type="text" id="del" placeholder="visitor or emp id">
+    			<br>
+    			<br>
+    			<button id="delete">Delete</button>
+    			<p class="err" id="error2" ></p>
+			</div>
+
+			</div>
+    </div>
+
+</body>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="/static/js/index.js"></script>
+</html>
