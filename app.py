@@ -1,7 +1,6 @@
 from flask import Flask, render_template, request, redirect
 import time
 import json
-import history.py
 app = Flask(__name__)
 
 import sqlite3
@@ -216,8 +215,6 @@ def delete():
 		else:
 		 	return "Your vehicle is not in the Parking"
 	return redirect('home.html')
-
-history.log_gen()
 
 if __name__ == "__main__":
 	app.run(debug=True)
