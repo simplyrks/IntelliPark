@@ -189,7 +189,7 @@ def delete():
 		cur.execute("SELECT id FROM Plot_Tw")
 		v_l=cur.fetchall()
 		for x in v_l:
-			v_list.append(x[0])
+			v2_list.append(x[0])
 		
 		if floor==2 and id not in v2_list:
 			return "Go on the correct floor"
