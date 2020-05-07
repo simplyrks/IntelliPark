@@ -118,14 +118,18 @@ def update():
 
 		if id in v_list:
 			return " Vehicle Already Parked"
-
+		
+		selstring1 = "SELECT id FROM Plot_Fw WHERE P_no = "+str(p_no)+";"
+		selstring2 = "SELECT id FROM Plot_Tw WHERE P_no = "+str(p_no)+";"
+		selstring3 = "SELECT id FROM Plot_V WHERE P_no = "+str(p_no)+";"
+		
 		if id in id_list:
 			if floor==1:
 				cur = conn.cursor()
-				am = conn.execute("SELECT id FROM Plot_Fw WHERE P_no=p_no")
+				am = conn.execute(selstring1)
 				avl = am.fetchall()
-				print(avl[p_no][0])
-				if avl[p_no][0]==None:
+				print(avl[0][0])
+				if avl[0][0]==None:
 					conn = sqlite3.connect('itpark.db')
 					conn.execute("UPDATE Plot_Fw SET id=? WHERE P_no=?",(str(id),p_no))
 					conn.commit()
@@ -134,10 +138,10 @@ def update():
 					return"Parking filled"
 			if floor==2:
 				cur = conn.cursor()
-				am = conn.execute("SELECT id FROM Plot_Tw WHERE P_no=p_no")
+				am = conn.execute(selstring2)
 				avl = am.fetchall()
-				print(avl[p_no][0])
-				if avl[p_no][0]==None:
+				print(avl[0][0])
+				if avl[0][0]==None:
 					conn = sqlite3.connect('itpark.db')
 					conn.execute("UPDATE Plot_Tw SET id=? WHERE P_no=?",(str(id),p_no))
 					conn.commit()
@@ -146,10 +150,10 @@ def update():
 					return"Parking filled"
 			if floor==3:
 				cur = conn.cursor()
-				am = conn.execute("SELECT id FROM Plot_V WHERE P_no=p_no")
+				am = conn.execute(selstring3)
 				avl = am.fetchall()
-				print(avl[p_no][0])
-				if avl[p_no][0]==None:
+				print(avl[0][0])
+				if avl[0][0]==None:
 					conn = sqlite3.connect('itpark.db')
 					conn.execute("UPDATE Plot_V SET id=? WHERE P_no=?",(str(id),p_no))
 					conn.commit()
@@ -171,18 +175,24 @@ def delete():
 		id = str(id)
 		floor = int(floor)
 		print(id)
-		v_list=[]
-
+		v1_list=[]
+		v2_list=[]
 		cur=conn.cursor()
 		cur.execute("SELECT id FROM Plot_Fw")
 		v_l=cur.fetchall()
 		for x in v_l:
-			v_list.append(x[0])
+			v1_list.append(x[0])
+			
+		if floor==1 and id not in v1_list:
+			return "Go on the correct floor"
 		
 		cur.execute("SELECT id FROM Plot_Tw")
 		v_l=cur.fetchall()
 		for x in v_l:
 			v_list.append(x[0])
+		
+		if floor==2 and id not in v2_list:
+			return "Go on the correct floor"
 		
 		vv_list=[]
 		cur.execute("SELECT id FROM Plot_V")
@@ -190,8 +200,11 @@ def delete():
 		print(v_l)
 		for x in v_l:
 			vv_list.append(x[0])
+			
+		if floor==3 and id not in vv_list:
+			return "Go on the correct floor"
 
-		if id in v_list:
+		if id in v1_list or id in v2_list:
 			if floor==1:
 				conn = sqlite3.connect('itpark.db')
 				conn.execute("UPDATE Plot_Fw SET id=? WHERE id=?",(None,str(id)))
