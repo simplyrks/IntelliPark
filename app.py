@@ -1,6 +1,13 @@
 from flask import Flask, render_template, request, redirect
 import time
 import json
+import re
+regex = '^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$'
+def check(email):  
+    if(re.search(regex,email)):  
+        return True 
+    else:  
+    	return False
 app = Flask(__name__)
 
 import sqlite3
@@ -30,9 +37,6 @@ def home():
 def index():
 	return render_template('index.html')
 
-@app.route('/Login/')
-def Login():
-	return render_template('Login.html')
 
 
 
@@ -91,9 +95,6 @@ def update():
 		id = request.args.get('id')
 		p_no = request.args.get('p_no')
 		floor = request.args.get('floor')
-		print(id)
-		print(p_no)
-		print(floor)
 		v_list=[]
 		p_no = int(p_no)
 		floor = int(floor)
@@ -117,18 +118,20 @@ def update():
 			v_list.append(x[0])
 
 		if id in v_list:
-			return " Vehicle Already Parked"
-		
+			return " Your Vehicle is Already Parked"
+
 		selstring1 = "SELECT id FROM Plot_Fw WHERE P_no = "+str(p_no)+";"
 		selstring2 = "SELECT id FROM Plot_Tw WHERE P_no = "+str(p_no)+";"
 		selstring3 = "SELECT id FROM Plot_V WHERE P_no = "+str(p_no)+";"
-		
+
 		if id in id_list:
 			if floor==1:
 				cur = conn.cursor()
 				am = conn.execute(selstring1)
 				avl = am.fetchall()
-				print(avl[0][0])
+				
+				
+				
 				if avl[0][0]==None:
 					conn = sqlite3.connect('itpark.db')
 					conn.execute("UPDATE Plot_Fw SET id=? WHERE P_no=?",(str(id),p_no))
@@ -140,7 +143,7 @@ def update():
 				cur = conn.cursor()
 				am = conn.execute(selstring2)
 				avl = am.fetchall()
-				print(avl[0][0])
+				
 				if avl[0][0]==None:
 					conn = sqlite3.connect('itpark.db')
 					conn.execute("UPDATE Plot_Tw SET id=? WHERE P_no=?",(str(id),p_no))
@@ -152,7 +155,7 @@ def update():
 				cur = conn.cursor()
 				am = conn.execute(selstring3)
 				avl = am.fetchall()
-				print(avl[0][0])
+				
 				if avl[0][0]==None:
 					conn = sqlite3.connect('itpark.db')
 					conn.execute("UPDATE Plot_V SET id=? WHERE P_no=?",(str(id),p_no))
@@ -164,7 +167,7 @@ def update():
 				return " Enter Correct Floor"
 		else:
 			return "Enter Correct ID"
-	return redirect('home.html')
+	return redirect('home')
 
 @app.route('/delete',methods=['GET', 'POST'])
 def delete():
@@ -174,33 +177,44 @@ def delete():
 		floor = request.args.get('floor')
 		id = str(id)
 		floor = int(floor)
-		print(id)
 		v1_list=[]
-		v2_list=[]
+
+		if id not in id_list:
+			return "Enter Correct ID"
+
 		cur=conn.cursor()
 		cur.execute("SELECT id FROM Plot_Fw")
 		v_l=cur.fetchall()
 		for x in v_l:
 			v1_list.append(x[0])
-			
-		if floor==1 and id not in v1_list:
-			return "Go on the correct floor"
+
 		
+		
+		v2_list=[]
 		cur.execute("SELECT id FROM Plot_Tw")
 		v_l=cur.fetchall()
 		for x in v_l:
 			v2_list.append(x[0])
 		
-		if floor==2 and id not in v2_list:
-			return "Go on the correct floor"
 		
+
 		vv_list=[]
 		cur.execute("SELECT id FROM Plot_V")
 		v_l=cur.fetchall()
-		print(v_l)
 		for x in v_l:
 			vv_list.append(x[0])
-			
+
+
+
+		if id not in v1_list and id not in v2_list and id not in vv_list:
+			return "Your vehicle is not in the Parking"
+
+		if floor==1 and id not in v1_list:
+			return "Go on the correct floor"
+
+		if floor==2 and id not in v2_list:
+			return "Go on the correct floor"
+
 		if floor==3 and id not in vv_list:
 			return "Go on the correct floor"
 
@@ -224,10 +238,26 @@ def delete():
 				conn.commit()
 				return "deleted"
 			else:
-				return " Incorrect Correct floor"
+				return " Enter Correct floor"
 		else:
 		 	return "Your vehicle is not in the Parking"
-	return redirect('home.html')
+	return render('home')
+
+@app.route('/handle_data', methods=['POST'])
+def handle_data():
+    name = request.form['name']
+    email = request.form['email']
+    message = request.form['message']
+    f = open("Message.txt", "a")
+    f.write("Name = "+str(name)+"\nEmail = "+str(email)+"\nMessage = "+str(message))
+    f.write("\n---------------------------------------------------------------------\n")
+    f.close()
+    if(check(email)):
+    	return redirect('home')
+    else:
+    	return redirect('feedback')
 
 if __name__ == "__main__":
-	app.run(debug=True)
+	app.secret_key = 'super secret key'
+	app.config['SESSION_TYPE'] = 'filesystem'
+	app.run(host="0.0.0.0", port=80,debug=True)
