@@ -118,7 +118,7 @@ def update():
 			v_list.append(x[0])
 
 		if id in v_list:
-			return " Your Vehicle is Already Parked"
+			return "Vehicle Parked"
 
 		selstring1 = "SELECT id FROM Plot_Fw WHERE P_no = "+str(p_no)+";"
 		selstring2 = "SELECT id FROM Plot_Tw WHERE P_no = "+str(p_no)+";"
