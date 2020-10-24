@@ -19,5 +19,5 @@ To check the availability of a vacant space in the Parking Lot.
 	- (proj)C:\...>pip install flask
 	- (proj)C:\...>python3 app.py
 
-Now, for hosting our webpage in the localhost, First to a browser say, Chrome and then in the address bar, type "127.0.0.1:5000" without quotes.
+Now, for hosting the webpage in the localhost, First to a browser say, Chrome and then in the address bar, type "127.0.0.1:5000" without quotes.
 
